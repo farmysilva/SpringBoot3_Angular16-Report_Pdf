@@ -23,7 +23,13 @@
         <!-- Category Column -->
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef> Category </th>
-          <td mat-cell *matCellDef="let course"> {{ course.category }} </td>
+          <td mat-cell *matCellDef="let course"> {{ course.category }}
+            <mat-icon aria-hidden="false" aria-label="categoria do curso">
+              <span class="material-symbols-outlined">
+                {{ course.category | category}}
+              </span>
+            </mat-icon>
+          </td>
         </ng-container>
 
         <!-- Symbol Column
