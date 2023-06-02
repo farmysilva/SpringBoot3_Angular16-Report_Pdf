@@ -14,6 +14,7 @@
     </ng-template>
     <div *ngIf="courses$ | async as courses; else loadingTable">
       <table mat-table [dataSource]="courses" class="mat-elevation-z8">
+
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Course: </th>
