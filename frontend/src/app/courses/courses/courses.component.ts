@@ -35,8 +35,8 @@ export class CoursesComponent implements OnInit {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg,
       width: '350px',
-      enterAnimationDuration: '3000ms',
-      exitAnimationDuration: '1500ms'
+      enterAnimationDuration: '1200ms',
+      exitAnimationDuration: '1200ms'
     });
   }
 
