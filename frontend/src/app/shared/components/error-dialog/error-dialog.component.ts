@@ -11,7 +11,7 @@ export class ErrorDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: string) { }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    //throw new Error('Method not implemented.');
   }
 
 }

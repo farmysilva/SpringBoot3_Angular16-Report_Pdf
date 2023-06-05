@@ -1,0 +1,35 @@
+<mat-card class="min-width">
+
+  <mat-card-header>
+    <mat-toolbar color="accent">
+      <mat-toolbar-row>
+        <span>Cadastro de Cursos</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </mat-card-header>
+
+  <mat-card-content >
+    <form [formGroup]="form">
+
+      <mat-form-field hintLabel="Max 200 characters" class="fieldName">
+        <mat-label>Digite o nome do Curso</mat-label>
+        <input matInput #input maxlength="200" placeholder="Ex. Java Básico" formControlName="name">
+        <mat-hint align="end">{{input.value.length}}/200</mat-hint>
+      </mat-form-field>
+
+     <mat-form-field>
+        <mat-label>Escolha a Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="null"> </mat-option>
+          <mat-option value="Front-end">Front-end</mat-option>
+          <mat-option value="Back-end">Back-end</mat-option>
+        </mat-select>
+        <mat-hint align="end">Aqui está a seta suspensa ^</mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button class="space" mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button class="space" mat-raised-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>
