@@ -15,16 +15,22 @@
         <mat-label>Digite o nome do Curso</mat-label>
         <input matInput #input maxlength="200" placeholder="Ex. Java Básico" formControlName="name">
         <mat-hint align="end">{{input.value.length}}/200</mat-hint>
+        <mat-error *ngIf="form.get('name')?.invalid">
+          {{ getErrorMessage("name") }}
+        </mat-error>
       </mat-form-field>
 
      <mat-form-field>
         <mat-label>Escolha a Categoria</mat-label>
         <mat-select formControlName="category">
           <mat-option value="null"> </mat-option>
-          <mat-option value="Front-end">Front-end</mat-option>
-          <mat-option value="Back-end">Back-end</mat-option>
+          <mat-option value="Frontend">Front-end</mat-option>
+          <mat-option value="Backend">Back-end</mat-option>
         </mat-select>
         <mat-hint align="end">Aqui está a seta suspensa ^</mat-hint>
+        <mat-error *ngIf="form.get('category')?.invalid">
+          {{ getErrorMessage("category") }}
+        </mat-error>
       </mat-form-field>
     </form>
   </mat-card-content>

@@ -23,12 +23,34 @@ public class BackendApplication {
 			courseRepository.deleteAll();
 
 			Course c =  new Course();
-			c.setName("Spring com Algular");
+			c.setName("Algular");
 			c.setCategory("Frontend");
 			
 			courseRepository.save(c);
-		};
 
+			Course c1 =  new Course();
+			c1.setName("Spring");
+			c1.setCategory("Backend");
+			
+			courseRepository.save(c1);
+			
+			Course c2 =  new Course();
+			c2.setName("React Native");
+			c2.setCategory("Frontend");
+			
+			courseRepository.save(c2);
+			
+			Course c3 =  new Course();
+			c3.setName("Python");
+			c3.setCategory("Backend");
+			
+			courseRepository.save(c3);
+		};
 	}
+
+
+
+
+	
 
 }

@@ -8,7 +8,7 @@ import { Course } from '../model/course';
 @Injectable({
   providedIn: 'root'
 })
-export class CoursesService {
+export class CoursesService {  
 
   //private readonly API = '/assets/courses.json';
   private readonly API = 'api/courses';
@@ -25,11 +25,36 @@ export class CoursesService {
   }
 
   save(courseRecord: Partial<Course>){
+    if (courseRecord._id) {
+      return this.update(courseRecord);
+    }
+    return this.create(courseRecord);
+  }
+
+  loadById(id: string){
+    return this.htttpClient.get<Course>(`${this.API}/${id}`);
+  }
+
+  private create(courseRecord: Partial<Course>){
     return this.htttpClient.post<Course[]>(this.API, courseRecord).
     pipe(
       first()
     );
-    console.log(courseRecord);
+  }
+
+
+  private update (courseRecord: Partial<Course>){
+    return this.htttpClient.put<Course[]>(`${this.API}/${courseRecord._id}`, courseRecord).
+    pipe(
+      first()
+    );
+  }
+
+  remove(id: string){
+    return this.htttpClient.delete<Course>(`${this.API}/${id}`).
+    pipe(
+      first()
+    );
   }
 
 }
