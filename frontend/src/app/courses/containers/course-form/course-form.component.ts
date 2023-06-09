@@ -22,7 +22,7 @@ export class CourseFormComponent  implements OnInit{
       ' ',
       [
         Validators.required,
-        Validators.minLength(10),
+        Validators.minLength(4),
         Validators.maxLength(200)
 
       ]],
@@ -37,7 +37,7 @@ export class CourseFormComponent  implements OnInit{
     private formBuilder: NonNullableFormBuilder,
     private service: CoursesService,
     private snackBar: MatSnackBar,
-    private location: Location,    
+    private location: Location,
     private route: ActivatedRoute,
   ){
     //this.form
@@ -62,7 +62,7 @@ export class CourseFormComponent  implements OnInit{
   onSucess(msg: string){
     this.snackBar.open(
       msg,
-       '', 
+       '',
        {
         duration: 4000
       }
@@ -77,14 +77,14 @@ export class CourseFormComponent  implements OnInit{
     this.snackBar.open('Erro ao salvar curso!', '', {duration: 4000});
   }
 
-  getErrorMessage(fieldName: string){    
-    const field = this.form.get(fieldName);    
+  getErrorMessage(fieldName: string){
+    const field = this.form.get(fieldName);
     if (field?.hasError('required')) {
       return 'Campo obrigatório!';
     }
 
     if (field?.hasError('minlength')) {
-      const requiredLength = field.errors? field.errors['minlength']['requiredLength']:10;
+      const requiredLength = field.errors? field.errors['minlength']['requiredLength']: 4;
       return `O mínimo de caracteres é de: ${requiredLength} caracteres!`;
     }
 

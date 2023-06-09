@@ -26,7 +26,7 @@ export class CoursesComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
-    ) {
+  ) {
     this.refresh();
   }
 
@@ -43,52 +43,52 @@ export class CoursesComponent implements OnInit {
     //throw new Error('Method not implemented.');
   }
 
-  onAdd(){
-    this.router.navigate(['new'], {relativeTo:this.route});
+  onAdd() {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
-  onEdit(course: Course){
-    this.router.navigate(['edit', course._id], {relativeTo:this.route});
+  onEdit(course: Course) {
+    this.router.navigate(['edit', course._id], { relativeTo: this.route });
   }
 
-  onDelete(course: Course){
-    this.msg = 'Tem certeza que deseja remover o curso '+course.name+'!'
+  onDelete(course: Course) {
+    this.msg = 'Tem certeza que deseja remover o curso ' + course.name + '!'
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: this.msg,
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.coursesService.remove(course._id).subscribe(
-          () =>{
-            this.msg = 'O curso '+course.name+', foi removido com sucesso!'
-            this.refresh()
+        this.coursesService.remove(course._id).subscribe({
+          next: (v) => {
+            this.msg = 'O curso ' + course.name + ', foi removido com sucesso!'
             this.snackBar.open(this.msg, 'X', {
               duration: 4000,
               verticalPosition: 'top',
               horizontalPosition: 'center'
-            });
+            })
+            this.refresh();
           },
-          () => {  
-            this.msg = 'Erro ao tentar remover o curso '+course.name+'!'      
+          error: (e) => {
+            this.msg = 'Erro ao tentar remover o curso ' + course.name + '!'
             this.onError(this.msg)
-            this.refresh()}      
-        );
+            this.refresh()
+          }
+        })
       }
     });
-    
   }
 
-  refresh(){
+  refresh() {
     this.courses$ = this.coursesService.list()
-    .pipe(
-      catchError( error => {
-        this.onError('Erro de carregamento de cursos!');
-        console.log(error);
-        return of ([])
-      })
-    );
+      .pipe(
+        catchError(error => {
+          this.onError('Erro de carregamento de cursos!');
+          console.log(error);
+          return of([])
+        })
+      );
   }
-  onReport(course: Course){
+  onReport(course: Course) {
     //
   }
 
