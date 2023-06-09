@@ -24,8 +24,8 @@
         <mat-label>Escolha a Categoria</mat-label>
         <mat-select formControlName="category">
           <mat-option value="null"> </mat-option>
-          <mat-option value="Frontend">Front-end</mat-option>
-          <mat-option value="Backend">Back-end</mat-option>
+          <mat-option value="Front-end">Front-end</mat-option>
+          <mat-option value="Back-end">Back-end</mat-option>
         </mat-select>
         <mat-hint align="end">Aqui está a seta suspensa ^</mat-hint>
         <mat-error *ngIf="form.get('category')?.invalid">

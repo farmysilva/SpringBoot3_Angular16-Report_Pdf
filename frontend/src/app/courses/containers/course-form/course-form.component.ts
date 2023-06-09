@@ -22,7 +22,7 @@ export class CourseFormComponent  implements OnInit{
       ' ',
       [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(3),
         Validators.maxLength(200)
 
       ]],
@@ -84,7 +84,7 @@ export class CourseFormComponent  implements OnInit{
     }
 
     if (field?.hasError('minlength')) {
-      const requiredLength = field.errors? field.errors['minlength']['requiredLength']: 4;
+      const requiredLength = field.errors? field.errors['minlength']['requiredLength']: 3;
       return `O mínimo de caracteres é de: ${requiredLength} caracteres!`;
     }
 
