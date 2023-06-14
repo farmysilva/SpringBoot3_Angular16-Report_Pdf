@@ -1,21 +1,22 @@
-package com.farmy.backend.enums.converters;
+package com.farmy.backend.course.enums.converters;
 
-import com.farmy.backend.enums.Category;
 import java.util.stream.Stream;
+
+import com.farmy.backend.course.enums.Category;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+
 
 @Converter(autoApply = true)
 public class CategoryConverter implements AttributeConverter<Category, String> {
 
     @Override
-    public String convertToDatabaseColumn(Category category) {
-        if (category == null) {
-            return null;            
+    public String convertToDatabaseColumn(Category status) {
+        if (status == null) {
+            return null;
         }
-        return category.getValue();
-     
+        return status.getValue();
     }
 
     @Override
@@ -23,10 +24,11 @@ public class CategoryConverter implements AttributeConverter<Category, String> {
         if (value == null) {
             return null;
         }
-
         return Stream.of(Category.values())
-        .filter(c -> c.getValue().equals(value))
-        .findFirst()
-        .orElseThrow(IllegalArgumentException::new);        
-    }    
+                .filter(c -> c.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
 }
+

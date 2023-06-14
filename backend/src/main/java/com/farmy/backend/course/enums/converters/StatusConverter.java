@@ -1,22 +1,21 @@
-package com.farmy.backend.enums.converters;
-
-import com.farmy.backend.enums.Status;
+package com.farmy.backend.course.enums.converters;
 
 import java.util.stream.Stream;
+
+import com.farmy.backend.course.enums.Status;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class StatusConverter implements AttributeConverter<Status, String>{
-    
+public class StatusConverter implements AttributeConverter<Status, String> {
+
     @Override
     public String convertToDatabaseColumn(Status status) {
         if (status == null) {
-            return null;            
+            return null;
         }
         return status.getValue();
-     
     }
 
     @Override
@@ -24,10 +23,10 @@ public class StatusConverter implements AttributeConverter<Status, String>{
         if (value == null) {
             return null;
         }
-
         return Stream.of(Status.values())
-        .filter(c -> c.getValue().equals(value))
-        .findFirst()
-        .orElseThrow(IllegalArgumentException::new);        
+                .filter(c -> c.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
+
 }
