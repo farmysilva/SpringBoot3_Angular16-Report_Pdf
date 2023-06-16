@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Course } from '../../model/course';
 
@@ -7,37 +7,36 @@ import { Course } from '../../model/course';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent {
 
   @Input() courses: Course[] = [];
-  @Output() add = new EventEmitter(false);
-  @Output() edit = new EventEmitter(false);
-  @Output() delete = new EventEmitter(false);
-  @Output() report = new EventEmitter(false);
+  @Output() add: EventEmitter<boolean>= new EventEmitter(false);
+  @Output() edit: EventEmitter<Course> = new EventEmitter(false);
+  @Output() remove: EventEmitter<Course> = new EventEmitter(false);
+  @Output() report:EventEmitter<Course>  = new EventEmitter(false);
+
+  @Output() details: EventEmitter<Course> = new EventEmitter(false);
   readonly displayedColumns = ['name', 'category', 'actions'];
-  
 
   constructor(
-  ){
-
-  }
-  ngOnInit(): void {
-    //throw new Error('Method not implemented.');
-  }
+  ){ }
 
   onAdd(){
     this.add.emit(true);
   }
 
-  onEdit(course: Course){
-    this.edit.emit(course);
+  onEdit(record: Course){
+    this.edit.emit(record);
   }
 
-  onDelete(course: Course){
-    this.delete.emit(course);
+  onRemove(record: Course){
+    this.remove.emit(record);
+  }
+  onReport(record: Course){
+    this.report.emit(record);
   }
 
-  onReport(course: Course){
-    this.report.emit(course);
+  onDetails(record: Course) {
+    this.details.emit(record);
   }
 }

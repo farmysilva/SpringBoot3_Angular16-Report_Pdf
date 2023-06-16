@@ -6,8 +6,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './containers/courses/courses.component';
 import { CourseFormComponent } from './containers/course-form/course-form.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
+import { CourseViewComponent } from './components/course-view/course-view.component';
 
 
 
@@ -15,7 +16,8 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
   declarations: [
     CoursesComponent,
     CourseFormComponent,
-    CoursesListComponent
+    CoursesListComponent,
+    CourseViewComponent
   ],
   imports: [
     CommonModule,

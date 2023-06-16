@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
+
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
@@ -26,8 +27,20 @@ export class CoursesComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.refresh();
+  }
+  refresh() {
+    this.courses$ = this.coursesService.list()
+      .pipe(
+        catchError(error => {
+          this.onError('Erro de carregamento de cursos!');
+          console.log(error);
+          return of([])
+        })
+      );
   }
 
   onError(errorMsg: string) {
@@ -39,10 +52,6 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    //throw new Error('Method not implemented.');
-  }
-
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
@@ -50,7 +59,7 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['edit', course._id], { relativeTo: this.route });
   }
 
-  onDelete(course: Course) {
+  onRemove(course: Course) {
     this.msg = 'Tem certeza que deseja remover o curso ' + course.name + '!'
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: this.msg,
@@ -78,18 +87,9 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  refresh() {
-    this.courses$ = this.coursesService.list()
-      .pipe(
-        catchError(error => {
-          this.onError('Erro de carregamento de cursos!');
-          console.log(error);
-          return of([])
-        })
-      );
-  }
+
   onReport(course: Course) {
-    //
+    //chamar visualisador do pdf junto com o pdf do curso.
   }
 
 }

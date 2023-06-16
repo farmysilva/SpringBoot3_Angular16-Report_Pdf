@@ -1,5 +1,5 @@
 export interface Lesson{
-  id: string;
+  _id: string;
   name: string;
-  urlYoutube: string;
+  youtubeUrl: string;
 }
