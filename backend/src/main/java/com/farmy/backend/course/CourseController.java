@@ -1,8 +1,14 @@
 package com.farmy.backend.course;
 
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +21,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 import com.farmy.backend.course.dto.CourseDTO;
 import com.farmy.backend.course.dto.CoursePageDTO;
 import com.farmy.backend.course.dto.CourseRequestDTO;
+import com.lowagie.text.Document;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * Represents the REST API for the Course resource.
@@ -54,6 +65,11 @@ public class CourseController {
         return courseService.findById(id);
     }
 
+    @GetMapping("/reportById/{id}") /* produces = MediaType.APPLICATION_PDF_VALUE"*/
+    public Document courseReportById(@PathVariable @Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws JRException, IOException{ 
+        return courseService.exportCourseReportById(id, httpServletResponse);
+    }
+    
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public CourseDTO create(@RequestBody @Valid CourseRequestDTO course) {

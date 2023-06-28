@@ -1,8 +1,11 @@
 package com.farmy.backend.course;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import com.farmy.backend.course.enums.Status;
 import com.farmy.backend.exception.BusinessException;
 import com.farmy.backend.exception.RecordNotFoundException;
 
-
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -76,5 +79,11 @@ public class CourseService {
     public void delete(@Positive @NotNull Long id) {
         courseRepository.delete(courseRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id)));
+    }
+
+    public Document exportCourseReportById(@Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws DocumentException, IOException {        
+        
+        GenerateCoursePdfReport generateCoursePdfReport = new GenerateCoursePdfReport();
+        return generateCoursePdfReport.generatePdf(httpServletResponse, this.findById(id));
     }
 }

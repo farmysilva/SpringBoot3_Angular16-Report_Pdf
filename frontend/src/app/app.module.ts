@@ -8,13 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CourseViewComponent } from './course/component/course-view/course-view.component';
-
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CourseViewComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +20,7 @@ import { CourseViewComponent } from './course/component/course-view/course-view.
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
 
   ],
   providers: [],
