@@ -11,7 +11,6 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
 import { CourseViewComponent } from './components/course-view/course-view.component';
 
 
-
 @NgModule({
   declarations: [
     CoursesComponent,

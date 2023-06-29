@@ -12,6 +12,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   exports: [
@@ -27,7 +28,8 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     MatDialogModule,
     MatSnackBarModule,
     MatSidenavModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    PdfViewerModule
   ]
 })
 export class AppMaterialModule { }

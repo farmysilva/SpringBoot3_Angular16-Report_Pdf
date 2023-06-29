@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -21,9 +22,9 @@ import { AppComponent } from './app.component';
     MatIconModule,
     MatCardModule,
     HttpClientModule,
-
+    PdfViewerModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, PdfViewerModule]
 })
 export class AppModule { }
