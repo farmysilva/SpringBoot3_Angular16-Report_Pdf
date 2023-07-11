@@ -29,7 +29,7 @@ public class BackendApplication {
 
 			Lesson l = new Lesson();
 			l.setName("Introdução");
-			l.setYoutubeUrl("wxKzeZKeJUA");
+			l.setYoutubeUrl("P6LbBmahnHM");
 			l.setCourse(c);
 			c.getLessons().add(l);
 			
@@ -41,7 +41,7 @@ public class BackendApplication {
 
 			Lesson l1 = new Lesson();
 			l1.setName("Visão geral");
-			l1.setYoutubeUrl("wxKzeZKeJUB");
+			l1.setYoutubeUrl("EGaj9Stz8Hc");
 			l1.setCourse(c1);
 			c1.getLessons().add(l1);
 			
@@ -53,13 +53,13 @@ public class BackendApplication {
 
 			Lesson l2 = new Lesson();
 			l2.setName("Visão geral");
-			l2.setYoutubeUrl("wxKzeZKeJUC");
+			l2.setYoutubeUrl("JQ8ehR5tGa4");
 			l2.setCourse(c2);
 			c2.getLessons().add(l2);
 
 			Lesson l3 = new Lesson();
 			l3.setName("REACT em todo lugar");
-			l3.setYoutubeUrl("wxKzeZKeJUD");
+			l3.setYoutubeUrl("OdmVZ_AjnWU");
 			l3.setCourse(c2);
 			c2.getLessons().add(l3);
 			
@@ -71,7 +71,7 @@ public class BackendApplication {
 
 			Lesson l4 = new Lesson();
 			l4.setName("Divertido e Arrojado");
-			l4.setYoutubeUrl("wxKzeZKeJUE");
+			l4.setYoutubeUrl("fKH_hZ4FVPg");
 			l4.setCourse(c3);
 			c3.getLessons().add(l4);
 			

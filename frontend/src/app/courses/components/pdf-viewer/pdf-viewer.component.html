@@ -1,0 +1,13 @@
+<mat-card appearance="outlined">
+  <mat-toolbar color="accent">
+    <mat-icon>fact_check</mat-icon>
+    Report of course: {{course.name}}
+  </mat-toolbar>
+  <ngx-extended-pdf-viewer 
+    [src]= blobUrl 
+    [useBrowserLocale]="true"
+    [zoom]="'page-width'"
+    [height]="'auto'"
+    [textLayer]="true"
+  ></ngx-extended-pdf-viewer>
+</mat-card>

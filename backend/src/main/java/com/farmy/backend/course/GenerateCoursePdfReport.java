@@ -2,6 +2,10 @@ package com.farmy.backend.course;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.springframework.http.HttpHeaders;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import com.farmy.backend.course.dto.CourseDTO;
@@ -20,17 +24,19 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 import jakarta.servlet.http.HttpServletResponse;
-
 public class GenerateCoursePdfReport {
 
-    public Document generatePdf(HttpServletResponse response, CourseDTO course) throws DocumentException, IOException {
+    public void generatePdf(HttpServletResponse response, CourseDTO course) throws DocumentException, IOException {
         
         Document coursePDFDoc = new Document(PageSize.A4);
         String fileType = "inline;  filename="+this.nomeDoPdf(course);
-        response.setHeader("Content-Disposition", fileType);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, fileType);
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, HttpHeaders.CONTENT_DISPOSITION);
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
 
-        try {
-            PdfWriter pdfWriter = PdfWriter.getInstance(coursePDFDoc, response.getOutputStream());
+        try {   
+            PdfWriter pdfWriter = PdfWriter.getInstance(coursePDFDoc, response.getOutputStream());        
 
             coursePDFDoc.open();
 
@@ -85,7 +91,7 @@ public class GenerateCoursePdfReport {
            
             for (LessonDTO lesson : course.lessons()) {               
                 table.addCell(lesson.name());                
-                table.addCell(lesson.youtubeUrl());
+                table.addCell("https://youtu.be/"+lesson.youtubeUrl());
             }
             
             coursePDFDoc.add(table);
@@ -96,16 +102,13 @@ public class GenerateCoursePdfReport {
             coursePDFDoc.addTitle("Course Report - Spring Boot 3 and Angular 16");
 
            
-            coursePDFDoc.close();
+            coursePDFDoc.close();            
 
             pdfWriter.flush();
-            pdfWriter.close();
-
-            return coursePDFDoc;
+            pdfWriter.close();           
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return null;
         }
     }
     private String nomeDoPdf(CourseDTO course) {
@@ -116,7 +119,7 @@ public class GenerateCoursePdfReport {
         String horaFormatada = formatterHora.format(agora);
         String dataEHora = dataFormatada + "_" + horaFormatada;
 
-        String nome = course.name() + "_" + "PDF_Report_on_" + dataEHora + ".pdf";
+        String nome = course.name() + " " + "PDF Report on " + dataEHora + ".pdf";
 
         return nome;
     }

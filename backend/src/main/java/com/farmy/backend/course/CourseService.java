@@ -1,5 +1,6 @@
 package com.farmy.backend.course;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,9 +82,8 @@ public class CourseService {
                 .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
-    public Document exportCourseReportById(@Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws DocumentException, IOException {        
-        
+    public void exportCourseReportById(@Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws DocumentException, IOException {  
         GenerateCoursePdfReport generateCoursePdfReport = new GenerateCoursePdfReport();
-        return generateCoursePdfReport.generatePdf(httpServletResponse, this.findById(id));
+        generateCoursePdfReport.generatePdf(httpServletResponse, this.findById(id));
     }
 }
