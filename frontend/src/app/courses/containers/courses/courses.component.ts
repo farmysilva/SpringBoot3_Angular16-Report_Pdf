@@ -94,7 +94,8 @@ export class CoursesComponent implements OnInit {
   }
 
   onReport(course: Course){
-    this.router.navigate(['report', course._id], {relativeTo: this.route});// Aqui deve entrar o código do pdfS
+    //this.coursesService.reportPdf(course._id);
+    this.router.navigate(['report', course._id], {relativeTo: this.route});
   }
 
   onRemove(course: Course) {
@@ -116,11 +117,11 @@ export class CoursesComponent implements OnInit {
           },
           error: () => {
             this.msg = 'Erro ao tentar remover o curso ' + course.name + '!'
-            this.onError(this.msg),
-            this.refresh()
+            this.onError(this.msg)
           }
         });
       }
     });
+    this.refresh();
   }
 }

@@ -6,9 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.farmy.backend.course.enums.Category;
 import com.farmy.backend.shared.Validation.ValueOfEnum;
-
 import jakarta.validation.Valid;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

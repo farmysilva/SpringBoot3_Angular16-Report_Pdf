@@ -1,11 +1,9 @@
 package com.farmy.backend.course;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,12 +42,12 @@ public class CourseService {
         Page<Course> coursePage = courseRepository.findAll(PageRequest.of(page, pageSize));
         List<CourseDTO> list = coursePage.getContent().stream()
                 .map(courseMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
         return new CoursePageDTO(list, coursePage.getTotalElements(), coursePage.getTotalPages());
     }
 
     public List<CourseDTO> findByName(@NotNull @NotBlank String name) {
-        return courseRepository.findByName(name).stream().map(courseMapper::toDTO).collect(Collectors.toList());
+        return courseRepository.findByName(name).stream().map(courseMapper::toDTO).toList();
     }
 
     public CourseDTO findById(@Positive @NotNull Long id) {
@@ -72,9 +70,37 @@ public class CourseService {
         return courseRepository.findById(id).map(actual -> {
             actual.setName(courseRequestDTO.name());
             actual.setCategory(courseMapper.convertCategoryValue(courseRequestDTO.category()));
+            mergeLessonsForUpdate(actual, courseRequestDTO);
             return courseMapper.toDTO(courseRepository.save(actual));
         })
                 .orElseThrow(() -> new RecordNotFoundException(id));
+    }
+
+    private void mergeLessonsForUpdate(Course updatedCourse, CourseRequestDTO courseRequestDTO) {
+
+        // find the lessons that were removed
+        List<Lesson> lessonsToRemove = updatedCourse.getLessons().stream()
+                .filter(lesson -> courseRequestDTO.lessons().stream()
+                        .noneMatch(lessonDto -> lessonDto._id() != 0 && lessonDto._id() == lesson.getId()))
+                .collect(Collectors.toList());
+        lessonsToRemove.forEach(updatedCourse::removeLesson);
+
+        courseRequestDTO.lessons().forEach(lessonDto -> {
+            if (lessonDto._id() == 0) {
+                // Nova lição, adicione-a
+                updatedCourse.addLesson(courseMapper.convertLessonDTOToLesson(lessonDto));
+            } else {
+                // Lição existente, encontre-a e atualize
+                Lesson existingLesson = updatedCourse.getLessons().stream()
+                        .filter(lesson -> lesson.getId() == lessonDto._id())
+                        .findAny()
+                        .orElseThrow(() -> new RecordNotFoundException(lessonDto._id())); // Lançar exceção se a lição
+                                                                                          // não for encontrada
+
+                existingLesson.setName(lessonDto.name());
+                existingLesson.setYoutubeUrl(lessonDto.youtubeUrl());
+            }
+        });
     }
 
     public void delete(@Positive @NotNull Long id) {
@@ -82,7 +108,8 @@ public class CourseService {
                 .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
-    public void exportCourseReportById(@Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws DocumentException, IOException {  
+    public void exportCourseReportById(@Positive @NotNull Long id, HttpServletResponse httpServletResponse)
+            throws DocumentException, IOException {
         GenerateCoursePdfReport generateCoursePdfReport = new GenerateCoursePdfReport();
         generateCoursePdfReport.generatePdf(httpServletResponse, this.findById(id));
     }

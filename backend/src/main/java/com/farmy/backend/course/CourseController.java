@@ -1,8 +1,4 @@
 package com.farmy.backend.course;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,14 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farmy.backend.course.dto.CourseDTO;
 import com.farmy.backend.course.dto.CoursePageDTO;
 import com.farmy.backend.course.dto.CourseRequestDTO;
-import com.lowagie.text.Document;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -42,6 +36,7 @@ import net.sf.jasperreports.engine.JRException;
 @RequestMapping("api/courses")
 public class CourseController {
 
+    
     private final CourseService courseService;
 
     public CourseController(CourseService courseService) {
@@ -63,14 +58,7 @@ public class CourseController {
     public CourseDTO findById(@PathVariable @Positive @NotNull Long id) {
         return courseService.findById(id);
     }
-    
-	@CrossOrigin(origins = "http://localhost:8080")
-    @GetMapping(path = "/reportById/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    @ResponseStatus(code = HttpStatus.OK)
-    public void courseReportById(@PathVariable @Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws JRException, IOException {
-        courseService.exportCourseReportById(id, httpServletResponse);        
-    }
-    
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public CourseDTO create(@RequestBody @Valid CourseRequestDTO course) {
@@ -87,5 +75,12 @@ public class CourseController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @Positive @NotNull Long id) {
         courseService.delete(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:8080")
+    @GetMapping(path = "/reportById/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseStatus(code = HttpStatus.OK)
+    public void courseReportById(@PathVariable @Positive @NotNull Long id, HttpServletResponse httpServletResponse) throws JRException, IOException {
+        courseService.exportCourseReportById(id, httpServletResponse);        
     }
 }

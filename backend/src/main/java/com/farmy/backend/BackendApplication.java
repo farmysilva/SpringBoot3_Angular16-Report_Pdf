@@ -78,10 +78,4 @@ public class BackendApplication {
 			courseRepository.save(c3);
 		};
 	}
-
-
-
-
-	
-
 }

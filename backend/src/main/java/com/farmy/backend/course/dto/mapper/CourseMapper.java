@@ -49,7 +49,7 @@ public class CourseMapper {
         List<LessonDTO> lessonDTOList = course.getLessons()
                 .stream()
                 .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
-                .collect(Collectors.toList());
+                .toList();
         return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(),
                 lessonDTOList);
     }
@@ -64,4 +64,13 @@ public class CourseMapper {
             default -> throw new IllegalArgumentException("Invalid Category.");
         };
     }
+
+    public Lesson convertLessonDTOToLesson(LessonDTO lessonDTO) {
+        Lesson lesson = new Lesson();
+        lesson.setId(lessonDTO._id());
+        lesson.setName(lessonDTO.name());
+        lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+        return lesson;
+    }
+
 }

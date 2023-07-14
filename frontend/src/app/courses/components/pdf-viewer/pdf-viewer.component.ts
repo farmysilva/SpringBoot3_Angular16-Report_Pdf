@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,7 +16,7 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./pdf-viewer.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports:[
+  imports: [
     MatIconModule,
     MatCardModule,
     MatToolbarModule,
@@ -24,23 +24,29 @@ import { CoursesService } from '../../services/courses.service';
   ]
 })
 export class PdfViewerComponent implements OnInit {
-  public blobUrl: any;
+  public src: any;
 
   course!: Course;
 
-  constructor(private route: ActivatedRoute, private service: CoursesService,) {
+  constructor(private route: ActivatedRoute, private service: CoursesService) {
     this.course = this.route.snapshot.data['course'];
-    this.service.reportPdf(this.course._id);
-    this.blobUrl = this.service.returnUrlTemp();
   }
 
   ngOnInit(): void {
-    //
+    this.service.reportPdf(this.course._id)
+      .then((fileContent: Blob) => {
+        this.src = URL.createObjectURL(fileContent);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
+  ngOnDestroy(): void {
+    if (this.src) {
+      URL.revokeObjectURL(this.src);
+    }
+  }
+
+
 }
-
-
-
-
-

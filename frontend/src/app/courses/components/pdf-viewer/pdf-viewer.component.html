@@ -3,11 +3,10 @@
     <mat-icon>fact_check</mat-icon>
     Report of course: {{course.name}}
   </mat-toolbar>
-  <ngx-extended-pdf-viewer 
-    [src]= blobUrl 
-    [useBrowserLocale]="true"
-    [zoom]="'page-width'"
+  <ngx-extended-pdf-viewer
+    [src]= src
     [height]="'auto'"
+    [useBrowserLocale]="true"
     [textLayer]="true"
   ></ngx-extended-pdf-viewer>
 </mat-card>
