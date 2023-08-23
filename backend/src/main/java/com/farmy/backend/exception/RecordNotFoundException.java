@@ -15,6 +15,6 @@ public class RecordNotFoundException extends RuntimeException {
     }
 
     public RecordNotFoundException(int _id) {
-		 super("Could not find record " + id);
+		 super("Could not find record " + _id);
     }
 }
